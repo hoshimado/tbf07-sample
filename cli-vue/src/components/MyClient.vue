@@ -87,7 +87,7 @@ var itemStorage = {
         });
         // localStorage.setItem(STORAGE_KEY, JSON.stringify(saving_list));
         if(window.localStorage){
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(saving_list));
+            window.localStorage.setItem(STORAGE_KEY, JSON.stringify(saving_list));
         }
     }
 };
