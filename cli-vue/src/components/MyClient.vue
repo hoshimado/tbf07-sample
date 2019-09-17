@@ -1,39 +1,42 @@
 <template>
 <div><!-- 「id="id_app1"」としていたdivタグ配下をココへ配置。属性id自体の定義は不要なので削除 -->
-    <div id="id_input_area">
-        <div id="id_input_textarea">
-            <textarea v-model="input_message"
-             placeholder="ここに入力する。複数行可。">
-            </textarea>
-        </div>
-        <div id="id_input_command">
-            <div id="id_input_additional">
-                リストに追加する
-            </div>
-            <div id="id_input_button" v-on:click="clickInputButton">
-                <a href="#"><i class="fas fa-pen fa-2x"></i></a>
-                <!-- 
-                    <input type="button" value="追加"></input> 
-                -->
-            </div>
-        </div>
+    <div id="id_section_signup" v-if="!isSignUp"><!-- 初回サインアップ用 -->
+        【サインアップ】<br><br>
     </div>
-    <div id="id_todolist">
-        <ul>
-            <li v-for="(item,index) in todo_list" v-bind:key="index"> 
-                <!-- (要素、配列番号)で受け取れる仕様 -->
-                <div class="item_text" v-on:click="clickItem(index)">
-                <span v-bind:style="item.styleStr">{{ item.text }}</span>
+    <div id="id_section_main" v-if="isSignUp"><!-- サインアップ後のメイン画面 -->
+        <div id="id_input_area">
+            <div id="id_input_textarea">
+                <textarea v-model="input_message" placeholder="ここに入力する。複数行可。"></textarea>
+            </div>
+            <div id="id_input_command">
+                <div id="id_input_additional">
+                    リストに追加する
                 </div>
-                <div class="item_date">{{ item.dateStr }}</div>
-                <div v-on:click="clickDeleteButton(index)">
-                    <a href="#"><i class="fas fa-trash-alt"></i></a>
+                <div id="id_input_button" v-on:click="clickInputButton">
+                    <a href="#"><i class="fas fa-pen fa-2x"></i></a>
                     <!-- 
-                        <input type="button" value="削除"></input> 
+                        <input type="button" value="追加"></input> 
                     -->
                 </div>
-            </li>
-        </ul>
+            </div>
+        </div>
+        <div id="id_todolist">
+            <ul>
+                <li v-for="(item,index) in todo_list" v-bind:key="index"> 
+                    <!-- (要素、配列番号)で受け取れる仕様 -->
+                    <div class="item_text" v-on:click="clickItem(index)">
+                      <span v-bind:style="item.styleStr">{{ item.text }}</span>
+                    </div>
+                    <div class="item_date">{{ item.dateStr }}</div>
+                    <div v-on:click="clickDeleteButton(index)">
+                        <a href="#"><i class="fas fa-trash-alt"></i></a>
+                        <!-- 
+                            <input type="button" value="削除"></input> 
+                        -->
+                    </div>
+                </li>
+            </ul>
+        </div>
     </div>
 </div>
 </template>
@@ -87,19 +90,53 @@ var itemStorage = {
         });
         // localStorage.setItem(STORAGE_KEY, JSON.stringify(saving_list));
         if(window.localStorage){
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(saving_list));
+            window.localStorage.setItem(STORAGE_KEY, JSON.stringify(saving_list));
         }
     }
 };
 
 
+const KEYNAME = 'user'; // ★追加
+
+
 export default {
     name : "MyClient", // 「el : "#id_app1"」としていた部分。
+    props : { // ★追加
+        windowLocationHref : {
+            type: String,
+            required: false
+        }
+    },
     data : function () {
         return {
+            targetKey : '', // ★追加
             input_message : "",
-            todo_list : itemStorage.fetch()
+            todo_list : [] // ★変更
         };
+    },
+    computed : { // ★追加
+        isSignUp : function () {
+            return (this.targetKey.length > 0);
+        }
+    },
+    created : function () { // ★追加
+        const url = this.windowLocationHref;
+        const name = KEYNAME;
+        const regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)");
+        const results = regex.exec(url);
+        let key;
+        if (!results){
+            key = null;
+        }else if (!results[2]){
+            key = '';
+        }else {
+            key = decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
+
+        if(key){
+            this.targetKey = key;
+            this.todo_list = itemStorage.fetch();
+        }
     },
     watch : {
         todo_list : {

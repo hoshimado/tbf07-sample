@@ -1,6 +1,7 @@
 <template>
   <div id="app">
-    <MyClient/>   <!-- ★★ここで指定★★ -->
+    <!-- ★★ここを変更★★ -->
+    <MyClient v-bind:windowLocationHref="locationHrefStr"></MyClient>
   </div>
 </template>
 
@@ -8,7 +9,13 @@
 import MyClient from './components/MyClient'   // ★★ここで指定★★
 
 export default {
-  name: 'App',
+  name: 'app',
+  data: function () { // ★追加
+    // URL情報を欲しい且つDI(=Dependency Injection)するために、ここで注入する。
+    return {
+      locationHrefStr : window.location.href
+    };
+  },
   components: {
     MyClient   // ★★ここで指定★★
   }
@@ -22,3 +29,4 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
 }
+</style>
