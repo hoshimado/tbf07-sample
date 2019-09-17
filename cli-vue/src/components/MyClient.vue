@@ -59,7 +59,10 @@ var STORAGE_KEY = "todo-sample-vuejs20190623"
 var itemStorage = {
     fetch: function () {
         var todo_list = [];
-        var saved_list = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+        // var saved_list = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+        var saved_list = window.localStorage
+                        ? JSON.parse(window.localStorage.getItem(STORAGE_KEY) || "[]")
+                        : "[]";
         if( saved_list.length > 0 ){
             saved_list.forEach(function (item) {
                 todo_list.push(
@@ -82,7 +85,10 @@ var itemStorage = {
                 "createDateMiliSec" : item.utcSec
             })
         });
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(saving_list));
+        // localStorage.setItem(STORAGE_KEY, JSON.stringify(saving_list));
+        if(window.localStorage){
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(saving_list));
+        }
     }
 };
 
