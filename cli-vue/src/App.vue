@@ -1,17 +1,23 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <!-- ★★ここを変更★★ -->
+    <MyClient v-bind:windowLocationHref="locationHrefStr"></MyClient>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import MyClient from './components/MyClient'   // ★★ここで指定★★
 
 export default {
   name: 'app',
+  data: function () { // ★追加
+    // URL情報を欲しい且つDI(=Dependency Injection)するために、ここで注入する。
+    return {
+      locationHrefStr : window.location.href
+    };
+  },
   components: {
-    HelloWorld
+    MyClient   // ★★ここで指定★★
   }
 }
 </script>
@@ -21,8 +27,6 @@ export default {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 </style>
