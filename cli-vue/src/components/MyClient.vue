@@ -96,6 +96,7 @@ var itemStorage = {
 };
 
 
+import userKeyManager from '../utils/userKey.js'; // ★変更
 const KEYNAME = 'user'; // ★追加
 
 
@@ -119,19 +120,10 @@ export default {
             return (this.targetKey.length > 0);
         }
     },
-    created : function () { // ★追加
-        const url = this.windowLocationHref;
-        const name = KEYNAME;
-        const regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)");
-        const results = regex.exec(url);
-        let key;
-        if (!results){
-            key = null;
-        }else if (!results[2]){
-            key = '';
-        }else {
-            key = decodeURIComponent(results[2].replace(/\+/g, " "));
-        }
+    created : function () {
+        // ★変更
+        const key = userKeyManager
+        .getTargetUserFromUrlSearch(KEYNAME, this.windowLocationHref);
 
         if(key){
             this.targetKey = key;
