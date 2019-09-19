@@ -1,8 +1,9 @@
 # ２章：Vue-CLI でテスト駆動開発する（TDD）
 
-## §２：Vue の表⽰状態をテストする
+## §５：sinon.js でmocha する
 
-* リスト2.7 ⼀部を関数化して別ファイルへ
+* リスト2.14 外部ファイルにしてNew インスタンス化したitemStorage
 
+`npm install axios --save-dev` は、devで良い。最終的には、node_modulesを前提としないブラウザ環境向けにコンパイルされるので。
 
 
