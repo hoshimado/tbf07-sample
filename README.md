@@ -1,6 +1,6 @@
 # 3章：ExpressをWebAPIサーバーとしてTDDする
 
-## 節１：ExpressでHttpリクエスト（REST API）をMochaで検証する
+## 節２：ExpressでバックエンドとしてのREST APIの応答をTDDで実装する
 
 
 
