@@ -3,6 +3,8 @@
 掲載コードについては、完成しています。
 説明文については、暫定版です。一部、修正中があります。
 
+※リンク先はbranchです。
+
 ## １章
 
 * [chapter1section1-vue-cdn](https://github.com/hoshimado/tbf07-sample/tree/chapter1section1-vue-cdn)
@@ -33,6 +35,11 @@
 
 コード準備中のため、10月中旬までお待ち下さい。
 
+## 付録
+
+下記以外の付録のコードは、暫し待ちください。
+
+* [appendix-azure-express-mocha](https://github.com/hoshimado/tbf07-sample/tree/appendix-azure-express-mocha)
 
 
 
