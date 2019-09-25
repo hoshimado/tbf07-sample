@@ -1,6 +1,5 @@
 # １章：Vue.jsのCDN版からVue-CLI版へ移行
 
-## §３：Vue ファイルにまとめる
+## §４：fontawesmeの利用（簡易版）
 
-* リスト1.5 CDN 版から移植したVue ファイル
-* リスト1.6 MyClient.vue を呼び出すように修正したApp.vue
+* リスト1.8 Vue-CLIでfontawesomeを利用するにはindex.htmlにlinkタグを配置する
