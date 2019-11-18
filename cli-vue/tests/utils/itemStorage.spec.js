@@ -13,6 +13,79 @@ import { shouldFulfilled } from 'promise-test-helper';
 describe("itemStorage.js", () => {
     let USERNAME = 'hogehoge';
 
+    describe("emulate calling method sequentialy at VueInstance.", ()=>{
+        it("fetch(), add(), add() and delete().", () => {
+            let clock = sinon.useFakeTimers();
+            let stubGetMethod = sinon.stub(axios, 'get');
+            let stubPostMethod = sinon.stub(axios, 'post');
+            let stubDeleteMethod = sinon.stub(axios, 'delete');
+            let EXPECTED_ITEMS1 = [];
+            let EXPECTED_ITEMS2 = [{ id : 77, text : "new text1", create : "5000" }];
+            let EXPECTED_ITEMS3 = [{ id : 80, text : "new text2", create : "6000" }];
+            let itemStorage = new ItemStorage(axios, USERNAME);
+            let promise = Promise.resolve();
+            let fakeList;
+
+            stubGetMethod.onCall(0).returns(Promise.resolve({
+                status : 200,
+                data : {
+                    items : EXPECTED_ITEMS1
+                }
+            }));
+            stubPostMethod.onCall(0).returns(Promise.resolve({
+                status : 201,
+                data : {
+                    items : EXPECTED_ITEMS2
+                }
+            }));
+            stubPostMethod.onCall(1).returns(Promise.resolve({
+                status : 201,
+                data : {
+                    items : EXPECTED_ITEMS3
+                }
+            }));
+            stubDeleteMethod.onCall(0).returns(Promise.resolve({
+                status : 200
+            }));
+
+
+            promise = promise.then(()=>{
+                // created
+                return itemStorage.fetch()
+                .then(result=>{
+                    fakeList = result;
+                });
+            }).then(()=>{
+                // add new item.
+                return itemStorage.add(EXPECTED_ITEMS2[0].text)
+                .then(result=>{
+                    fakeList.push(result);
+                });
+            }).then(()=>{
+                // add new item.
+                return itemStorage.add(EXPECTED_ITEMS3[0].text)
+                .then(result=>{
+                    fakeList.push(result);
+                });
+            }).then(()=>{
+                // delete 1st item.
+                return itemStorage.remove( fakeList[0].id );
+            });
+
+            return shouldFulfilled(
+                promise
+            ).then(()=>{
+                stubGetMethod.restore();
+                stubPostMethod.restore();
+                stubDeleteMethod.restore();
+                clock.restore();
+
+                expect(stubDeleteMethod.getCall(0).args[0])
+                .to.be.equal('/api/v1/users/' + USERNAME + '/items/'+ EXPECTED_ITEMS2[0].id);
+            });
+        });
+    });
+
     describe("fetch()", ()=>{
         it("gets list of items with axios#get().", () => {
             let clock = sinon.useFakeTimers();
@@ -52,4 +125,3 @@ describe("itemStorage.js", () => {
         });
     });
 });
-

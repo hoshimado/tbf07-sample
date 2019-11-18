@@ -7,7 +7,6 @@
 
 <script>
 import MyClient from './components/MyClient'   // ★★ここで指定★★
-
 export default {
   name: 'app',
   data: function () { // ★追加

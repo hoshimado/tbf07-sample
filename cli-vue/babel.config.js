@@ -12,3 +12,12 @@ module.exports = (api) => {
     ]
   }
 }
+
+/*
+module.exports = {
+  presets: [
+    '@vue/app'
+  ]
+}
+*/
+

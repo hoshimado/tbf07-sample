@@ -3,7 +3,18 @@
  * 
  */
 
+
 const userKey = {
+    'create' : function (inputUserName) {
+        const baseName = inputUserName;
+        const lengthStr = ( '00' + baseName.length ).slice( -2 );
+        const S = "abcdefghijklmnopqrstuvwxyz0123456789"
+        const N = 30 - baseName.length;
+        const uniqueIdStr = Array.from(Array(N)).map(()=>S[Math.floor(Math.random()*S.length)]).join('');
+        // https://qiita.com/fukasawah/items/db7f0405564bdc37820e
+        const userKey = lengthStr + baseName + uniqueIdStr;
+        return userKey;
+    },
     'extractName' : function (userKey) {
         const digitStr = userKey.substring(0,2);
         const userNameLength = parseInt(digitStr);
@@ -35,5 +46,7 @@ const userKey = {
         return decodeURIComponent(results[2].replace(/\+/g, " "));
     }
 };
+
+
 
 export { userKey as default };
