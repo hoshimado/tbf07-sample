@@ -33,7 +33,7 @@
 
 ## ４章
 
-コード準備中のため、10月中旬までお待ち下さい。
+* [chapter4-deploy](https://github.com/hoshimado/tbf07-sample/tree/chapter4-deploy)
 
 ## 付録
 
