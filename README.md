@@ -37,8 +37,6 @@
 
 ## 付録
 
-下記以外の付録のコードは、暫し待ちください。
-
 * [appendix-azure-express-mocha](https://github.com/hoshimado/tbf07-sample/tree/appendix-azure-express-mocha)
 
 
