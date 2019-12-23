@@ -2,8 +2,10 @@
 
 ## §２：Vue-CLI 環境を導⼊
 
-導入前の「Azureを前提としたExpressの導入」は、××（作成後にリンクする）を参照ください。
+導入前の「Azureを前提としたExpressの導入」は、以下の付録のサンプルコードを参照ください（
+※Vue-CLIの利用で、Expressの導入は必須ではありませんが、配置のフォルダ構造の都合でExpress側のpackage.jsonにVueを記録したいので、このようにします）。
 
+* [appendix-azure-express-mocha](https://github.com/hoshimado/tbf07-sample/tree/appendix-azure-express-mocha)
 
 「リスト1.4 UnitTest を選択」では、次のように
 「Unit Testing」を**明示的に選択する**ことを忘れないでください。
