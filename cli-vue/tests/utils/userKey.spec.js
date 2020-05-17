@@ -3,7 +3,6 @@
  * encodeing=utf8
  */
 
-import sinon from 'sinon';
 import { assert, expect } from 'chai';
 import userKey from '../../src/utils/userKey';
 
